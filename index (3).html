@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tags Clone</title>
+
+<meta name="description" content="Sistema oficial da Tags Menu">
+
+<link rel="icon" type="image/png" href="foto.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+:root{
+--bg:#050816;
+--card:rgba(15,18,35,.72);
+--border:rgba(255,255,255,.08);
+--text:#f5f7ff;
+--muted:#9ca3af;
+--primary:#5865F2;
+--secondary:#8b5cf6;
+--shadow:0 0 35px rgba(88,101,242,.35);
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
+overflow:hidden;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,rgba(88,101,242,.22),transparent 30%),
+radial-gradient(circle at bottom right,rgba(139,92,246,.18),transparent 30%);
+z-index:-2;
+}
+
+.animated-bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+z-index:-1;
+}
+
+.orb{
+position:absolute;
+border-radius:50%;
+filter:blur(90px);
+opacity:.35;
+animation:float 12s infinite ease-in-out;
+}
+
+.orb:nth-child(1){
+width:320px;
+height:320px;
+background:#5865F2;
+top:-100px;
+left:-100px;
+}
+
+.orb:nth-child(2){
+width:260px;
+height:260px;
+background:#8b5cf6;
+bottom:-70px;
+right:-60px;
+animation-delay:2s;
+}
+
+.orb:nth-child(3){
+width:180px;
+height:180px;
+background:#22c55e;
+top:40%;
+left:60%;
+animation-delay:4s;
+}
+
+@keyframes float{
+0%,100%{
+transform:translateY(0) translateX(0)
+}
+50%{
+transform:translateY(-25px) translateX(15px)
+}
+}
+
+.loader{
+position:fixed;
+inset:0;
+background:#040611;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+gap:18px;
+z-index:9999;
+transition:.6s ease;
+}
+
+.loader.hidden{
+opacity:0;
+visibility:hidden;
+}
+
+.loader img{
+width:90px;
+height:90px;
+border-radius:24px;
+box-shadow:var(--shadow);
+animation:pulse 2s infinite;
+}
+
+.loader-bar{
+width:240px;
+height:6px;
+background:rgba(255,255,255,.08);
+border-radius:999px;
+overflow:hidden;
+}
+
+.loader-fill{
+width:0%;
+height:100%;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
+animation:load 2.2s forwards;
+}
+
+@keyframes load{
+to{
+width:100%;
+}
+}
+
+@keyframes pulse{
+0%,100%{
+transform:scale(1)
+}
+50%{
+transform:scale(1.08)
+}
+}
+
+.card{
+width:100%;
+max-width:480px;
+padding:40px;
+border-radius:30px;
+background:var(--card);
+border:1px solid var(--border);
+backdrop-filter:blur(18px);
+box-shadow:0 0 25px rgba(0,0,0,.25);
+text-align:center;
+}
+
+.logo{
+width:90px;
+height:90px;
+border-radius:24px;
+margin-bottom:20px;
+box-shadow:var(--shadow);
+}
+
+.tag{
+display:inline-flex;
+align-items:center;
+gap:10px;
+padding:10px 16px;
+border-radius:999px;
+background:rgba(88,101,242,.12);
+border:1px solid rgba(88,101,242,.25);
+margin-bottom:22px;
+color:#cbd5ff;
+font-size:.92rem;
+}
+
+h1{
+font-size:2.3rem;
+margin-bottom:14px;
+font-weight:800;
+}
+
+p{
+color:var(--muted);
+line-height:1.7;
+margin-bottom:28px;
+}
+
+.input-box{
+display:flex;
+align-items:center;
+gap:14px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:0 18px;
+margin-bottom:20px;
+transition:.3s;
+}
+
+.input-box:focus-within{
+border-color:rgba(88,101,242,.6);
+box-shadow:0 0 20px rgba(88,101,242,.18);
+}
+
+.input-box i{
+color:#a5b4fc;
+font-size:1rem;
+}
+
+.input-box input{
+width:100%;
+padding:18px 0;
+background:none;
+border:none;
+outline:none;
+color:white;
+font-size:1rem;
+}
+
+.enter-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+font-size:1rem;
+font-weight:800;
+cursor:pointer;
+transition:.3s;
+box-shadow:var(--shadow);
+}
+
+.enter-btn:hover{
+transform:translateY(-2px);
+}
+
+.toast{
+position:fixed;
+top:25px;
+right:25px;
+padding:18px 20px;
+border-radius:18px;
+background:rgba(15,18,35,.96);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(18px);
+display:flex;
+align-items:center;
+gap:14px;
+color:white;
+transform:translateX(420px);
+transition:.45s ease;
+z-index:99999;
+}
+
+.toast.show{
+transform:translateX(0);
+}
+
+footer{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+color:var(--muted);
+font-size:.92rem;
+}
+
+</style>
+</head>
+<body>
+
+<div class="animated-bg">
+<div class="orb"></div>
+<div class="orb"></div>
+<div class="orb"></div>
+</div>
+
+<div class="loader" id="loader">
+<img src="foto.png">
+<div class="loader-bar">
+<div class="loader-fill"></div>
+</div>
+</div>
+
+<div class="toast" id="toast">
+<i id="toastIcon" class="fa-solid fa-circle-check"></i>
+<span id="toastText">Mensagem</span>
+</div>
+
+<div class="card">
+
+<img src="foto.png" class="logo">
+
+<div class="tag">
+<i class="fa-solid fa-shield-halved"></i>
+Sistema oficial da Tags Menu
+</div>
+
+<h1>Tags Clone</h1>
+
+<p>
+Entre utilizando apenas seu nick do Discord
+para acessar o painel premium de solicitações.
+</p>
+
+<div class="input-box">
+<i class="fa-brands fa-discord"></i>
+<input type="text" id="discordNick" placeholder="Digite seu nick do Discord">
+</div>
+
+<button class="enter-btn" onclick="fakeLogin()">
+<i class="fa-solid fa-arrow-right"></i>
+Continuar
+</button>
+
+</div>
+
+<footer>
+© 2026 Tags Clone
+</footer>
+
+<script>
+
+const loader = document.getElementById('loader');
+
+window.addEventListener('load',()=>{
+
+setTimeout(()=>{
+loader.classList.add('hidden');
+},2200);
+
+});
+
+function showToast(message,type='success'){
+
+const toast = document.getElementById('toast');
+const text = document.getElementById('toastText');
+const icon = document.getElementById('toastIcon');
+
+toast.classList.add('show');
+
+if(type === 'success'){
+icon.className = 'fa-solid fa-circle-check';
+}else{
+icon.className = 'fa-solid fa-circle-xmark';
+}
+
+text.innerText = message;
+
+setTimeout(()=>{
+toast.classList.remove('show');
+},3500);
+
+}
+
+function fakeLogin(){
+
+const nick = document.getElementById('discordNick').value.trim();
+
+if(!nick){
+
+showToast('Digite seu nick do Discord.','error');
+return;
+
+}
+
+const fakeUser = {
+
+username:nick,
+global_name:nick,
+id:Math.floor(Math.random()*999999999999999999).toString()
+
+};
+
+localStorage.setItem('discord_user',JSON.stringify(fakeUser));
+
+showToast('Entrando no painel...','success');
+
+setTimeout(()=>{
+
+window.location.href = 'formulario.html';
+
+},1200);
+
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Formulário | Tags Clone</title>
+
+<link rel="icon" type="image/png" href="foto.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+:root{
+--bg:#050816;
+--card:rgba(15,18,35,.72);
+--border:rgba(255,255,255,.08);
+--text:#f5f7ff;
+--muted:#9ca3af;
+--primary:#5865F2;
+--secondary:#8b5cf6;
+--shadow:0 0 35px rgba(88,101,242,.35);
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
+overflow-x:hidden;
+position:relative;
+padding:30px;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,rgba(88,101,242,.22),transparent 30%),
+radial-gradient(circle at bottom right,rgba(139,92,246,.18),transparent 30%);
+z-index:-2;
+}
+
+.animated-bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+z-index:-1;
+}
+
+.orb{
+position:absolute;
+border-radius:50%;
+filter:blur(90px);
+opacity:.35;
+animation:float 12s infinite ease-in-out;
+}
+
+.orb:nth-child(1){
+width:320px;
+height:320px;
+background:#5865F2;
+top:-100px;
+left:-100px;
+}
+
+.orb:nth-child(2){
+width:260px;
+height:260px;
+background:#8b5cf6;
+bottom:-70px;
+right:-60px;
+animation-delay:2s;
+}
+
+.orb:nth-child(3){
+width:180px;
+height:180px;
+background:#22c55e;
+top:40%;
+left:60%;
+animation-delay:4s;
+}
+
+@keyframes float{
+0%,100%{
+transform:translateY(0) translateX(0)
+}
+50%{
+transform:translateY(-25px) translateX(15px)
+}
+}
+
+.toast{
+position:fixed;
+top:25px;
+right:25px;
+padding:18px 20px;
+border-radius:18px;
+background:rgba(15,18,35,.96);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(18px);
+display:flex;
+align-items:center;
+gap:14px;
+color:white;
+transform:translateX(420px);
+transition:.45s ease;
+z-index:99999;
+}
+
+.toast.show{
+transform:translateX(0);
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:340px 1fr;
+gap:30px;
+}
+
+.glass{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:28px;
+backdrop-filter:blur(18px);
+box-shadow:0 0 25px rgba(0,0,0,.25);
+}
+
+.profile{
+padding:30px;
+text-align:center;
+}
+
+.logo{
+width:90px;
+height:90px;
+border-radius:24px;
+margin-bottom:20px;
+box-shadow:var(--shadow);
+}
+
+.profile h2{
+margin-bottom:10px;
+font-size:1.5rem;
+}
+
+.profile p{
+color:var(--muted);
+margin-bottom:20px;
+}
+
+.info{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+padding:15px;
+border-radius:18px;
+margin-bottom:16px;
+text-align:left;
+}
+
+.info small{
+display:block;
+color:var(--muted);
+margin-bottom:4px;
+}
+
+.logout-btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:rgba(255,0,0,.08);
+border:1px solid rgba(255,0,0,.15);
+color:#ffb8b8;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+
+.logout-btn:hover{
+background:rgba(255,0,0,.14);
+}
+
+.panel{
+padding:35px;
+}
+
+.panel h1{
+font-size:2rem;
+margin-bottom:12px;
+}
+
+.panel p{
+color:var(--muted);
+margin-bottom:30px;
+line-height:1.7;
+}
+
+.input-group{
+margin-bottom:22px;
+}
+
+.input-group label{
+display:block;
+margin-bottom:10px;
+font-weight:600;
+}
+
+.input-box{
+display:flex;
+align-items:center;
+gap:14px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:0 18px;
+transition:.3s;
+}
+
+.input-box:focus-within{
+border-color:rgba(88,101,242,.6);
+box-shadow:0 0 20px rgba(88,101,242,.18);
+}
+
+.input-box i{
+color:#a5b4fc;
+}
+
+.input-box input{
+width:100%;
+padding:18px 0;
+background:none;
+border:none;
+outline:none;
+color:white;
+font-size:1rem;
+}
+
+.send-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+font-size:1rem;
+font-weight:800;
+cursor:pointer;
+transition:.3s;
+box-shadow:var(--shadow);
+}
+
+.send-btn:hover{
+transform:translateY(-2px);
+}
+
+footer{
+text-align:center;
+margin-top:35px;
+color:var(--muted);
+}
+
+@media(max-width:900px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+body{
+padding:18px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="animated-bg">
+<div class="orb"></div>
+<div class="orb"></div>
+<div class="orb"></div>
+</div>
+
+<div class="toast" id="toast">
+<i id="toastIcon" class="fa-solid fa-circle-check"></i>
+<span id="toastText">Mensagem</span>
+</div>
+
+<div class="container">
+
+<div class="profile glass">
+
+<img src="foto.png" class="logo">
+
+<h2 id="userNick">Usuário</h2>
+
+<p>Painel oficial Tags Clone</p>
+
+<div class="info">
+<small>ID</small>
+<strong id="userId">---</strong>
+</div>
+
+<div class="info">
+<small>Status</small>
+<strong>Conectado</strong>
+</div>
+
+<button class="logout-btn" onclick="logout()">
+<i class="fa-solid fa-right-from-bracket"></i>
+Sair
+</button>
+
+</div>
+
+<div class="panel glass">
+
+<h1>Solicitar Clonagem</h1>
+
+<p>
+Preencha corretamente os dados do servidor abaixo
+para enviar sua solicitação ao sistema Tags Clone.
+</p>
+
+<div class="input-group">
+<label>Nome do servidor</label>
+
+<div class="input-box">
+<i class="fa-solid fa-server"></i>
+<input type="text" id="serverName" placeholder="Digite o nome do servidor">
+</div>
+
+</div>
+
+<div class="input-group">
+<label>Link/invite do servidor</label>
+
+<div class="input-box">
+<i class="fa-solid fa-link"></i>
+<input type="text" id="serverLink" placeholder="https://discord.gg/exemplo">
+</div>
+
+</div>
+
+<button class="send-btn" onclick="sendWebhook()">
+<i class="fa-solid fa-paper-plane"></i>
+Enviar Solicitação
+</button>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Tags Clone
+</footer>
+
+<script>
+
+const user = localStorage.getItem('discord_user');
+
+if(!user){
+
+window.location.href = 'index.html';
+
+}
+
+const parsedUser = JSON.parse(user);
+
+document.getElementById('userNick').innerText = parsedUser.username;
+document.getElementById('userId').innerText = parsedUser.id;
+
+function showToast(message,type='success'){
+
+const toast = document.getElementById('toast');
+const text = document.getElementById('toastText');
+const icon = document.getElementById('toastIcon');
+
+toast.classList.add('show');
+
+if(type === 'success'){
+icon.className = 'fa-solid fa-circle-check';
+}else{
+icon.className = 'fa-solid fa-circle-xmark';
+}
+
+text.innerText = message;
+
+setTimeout(()=>{
+toast.classList.remove('show');
+},3500);
+
+}
+
+function logout(){
+
+localStorage.removeItem('discord_user');
+
+window.location.href = 'index.html';
+
+}
+
+async function sendWebhook(){
+
+const serverName = document.getElementById('serverName').value.trim();
+const serverLink = document.getElementById('serverLink').value.trim();
+
+if(!serverName || !serverLink){
+
+showToast('Preencha todos os campos.','error');
+return;
+
+}
+
+const payload = {
+
+username:'Tags Clone',
+
+embeds:[{
+
+title:'✨ Nova Solicitação de Clonagem',
+
+description:`${parsedUser.username} solicitou a clonagem de um servidor.`,
+
+color:5793266,
+
+thumbnail:{
+url:'https://cdn-icons-png.flaticon.com/512/5968/5968756.png'
+},
+
+fields:[
+
+{
+name:'👤 Usuário',
+value:parsedUser.username,
+inline:true
+},
+
+{
+name:'🆔 ID',
+value:parsedUser.id,
+inline:true
+},
+
+{
+name:'🖥️ Nome do servidor',
+value:serverName,
+inline:false
+},
+
+{
+name:'🔗 Link/Invite',
+value:serverLink,
+inline:false
+},
+
+{
+name:'🌐 Navegador',
+value:navigator.userAgent,
+inline:false
+},
+
+{
+name:'🕒 Data e Hora',
+value:new Date().toLocaleString('pt-BR'),
+inline:false
+}
+
+],
+
+footer:{
+text:'Tags Clone System'
+},
+
+timestamp:new Date().toISOString()
+
+}]
+
+};
+
+try{
+
+await fetch('https://discord.com/api/webhooks/1505255715126902824/-TjY7Xlw12bAdSS6DxWFlRNl8FlY_K4waGoTka9yDFEhvPHNYta-iKAOTtboJHhfsKxT',{
+
+method:'POST',
+
+headers:{
+'Content-Type':'application/json'
+},
+
+body:JSON.stringify(payload)
+
+});
+
+showToast('Solicitação enviada com sucesso.','success');
+
+document.getElementById('serverName').value = '';
+document.getElementById('serverLink').value = '';
+
+}catch(err){
+
+showToast('Erro ao enviar webhook.','error');
+
+}
+
+}
+
+</script>
+</body>
+</html>
